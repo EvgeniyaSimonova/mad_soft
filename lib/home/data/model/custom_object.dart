@@ -19,7 +19,8 @@ class CustomObject {
     required this.points,
   });
 
-  factory CustomObject.fromJson(Map<String, dynamic> json) => _$CustomObjectFromJson(json);
+  factory CustomObject.fromJson(Map<String, dynamic> json) =>
+      _$CustomObjectFromJson(json);
 
   Map<String, dynamic> toJson() => _$CustomObjectToJson(this);
 }

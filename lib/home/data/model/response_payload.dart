@@ -9,7 +9,8 @@ class ResponsePayload {
 
   ResponsePayload({required this.payload});
 
-  factory ResponsePayload.fromJson(Map<String, dynamic> json) => ResponsePayload.fromJson(json);
+  factory ResponsePayload.fromJson(Map<String, dynamic> json) =>
+      _$ResponsePayloadFromJson(json);
 
   Map<String, dynamic> toJson() => _$ResponsePayloadToJson(this);
 }
