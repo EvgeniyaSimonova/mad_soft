@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mad_soft/dio_client/dio_client.dart';
+import 'package:mad_soft/home/data/repository/home_repo_impl.dart';
 import 'package:mad_soft/home/presentation/screens/home_screen.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final DioClient _dioClient;
 
-  // This widget is the root of your application.
+  const MyApp({super.key, required DioClient dioClient})
+      : _dioClient = dioClient;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -12,7 +17,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      home: RepositoryProvider(
+        create: (context) => HomeRepo(_dioClient),
+        child: const MyHomePage(),
+      ),
     );
   }
 }

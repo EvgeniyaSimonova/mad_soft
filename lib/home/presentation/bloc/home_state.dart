@@ -7,5 +7,11 @@ class HomeState {
   final HomeBlocStates status;
   final List<CustomObject> payloadList;
 
-  const HomeState(this.payloadList, {required this.status});
+  final List<CustomObject> payloadSearchList;
+
+  const HomeState({
+    this.payloadList = const [],
+    this.payloadSearchList = const [],
+    required this.status,
+  });
 }

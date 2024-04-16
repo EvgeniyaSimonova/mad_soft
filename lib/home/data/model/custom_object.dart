@@ -7,9 +7,9 @@ part 'custom_object.g.dart';
 class CustomObject {
   final String title;
   @JsonKey(name: 'remaining_points')
-  final String remainingPoints;
+  final int remainingPoints;
   @JsonKey(name: 'total_points_count')
-  final String totalPointsCount;
+  final int totalPointsCount;
   final List<Points> points;
 
   CustomObject({

@@ -8,8 +8,8 @@ part of 'custom_object.dart';
 
 CustomObject _$CustomObjectFromJson(Map<String, dynamic> json) => CustomObject(
       title: json['title'] as String,
-      remainingPoints: json['remaining_points'] as String,
-      totalPointsCount: json['total_points_count'] as String,
+      remainingPoints: json['remaining_points'] as int,
+      totalPointsCount: json['total_points_count'] as int,
       points: (json['points'] as List<dynamic>)
           .map((e) => Points.fromJson(e as Map<String, dynamic>))
           .toList(),

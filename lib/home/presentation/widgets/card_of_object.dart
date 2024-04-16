@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:mad_soft/home/data/model/custom_object.dart';
 import 'package:mad_soft/utils/text_style.dart';
 
 class CardOfObject extends StatelessWidget {
+  final CustomObject responsePayload;
+
   const CardOfObject({
     super.key,
+    required this.responsePayload,
   });
 
   @override
@@ -18,15 +22,15 @@ class CardOfObject extends StatelessWidget {
         color: Colors.white,
         child: InkWell(
           onTap: () {},
-          child: const Padding(
-            padding: EdgeInsets.all(16.0),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 FittedBox(
                   child: Text(
-                    'ЖК Цвета радуги',
-                    style: TextStyle(
+                    responsePayload.title,
+                    style: const TextStyle(
                       fontSize: 16,
                       letterSpacing: 0.15,
                       fontWeight: FontWeight.w500,
@@ -35,25 +39,25 @@ class CardOfObject extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 6),
+                const SizedBox(height: 6),
                 FittedBox(
                   child: Row(
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             'Отснято сегодня:',
                             style: AppTextStyle.customTextSmall,
                           ),
                           Text(
-                            '0 / 20 доступно',
+                            '${responsePayload.totalPointsCount * 5} / 20 доступно',
                             style: AppTextStyle.customTextSmall,
                           ),
                         ],
                       ),
-                      SizedBox(width: 16),
-                      Column(
+                      const SizedBox(width: 16),
+                      const Column(
                         children: [
                           Text(
                             'Съемка займет:',
