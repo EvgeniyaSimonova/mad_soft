@@ -50,22 +50,39 @@ class CardOfObject extends StatelessWidget {
                             'Отснято сегодня:',
                             style: AppTextStyle.customTextSmall,
                           ),
-                          Text(
-                            '${responsePayload.totalPointsCount * 5} / 20 доступно',
-                            style: AppTextStyle.customTextSmall,
+                          RichText(
+                            text: TextSpan(
+                              text: '${responsePayload.totalPointsCount * 5}',
+                              style: AppTextStyle.customTextMedium,
+                              children: const [
+                                TextSpan(
+                                  text: ' / 20 осталось',
+                                  style: AppTextStyle.customTextSmall,
+                                )
+                              ]
+                            ),
                           ),
                         ],
                       ),
                       const SizedBox(width: 16),
-                      const Column(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             'Съемка займет:',
                             style: AppTextStyle.customTextSmall,
                           ),
-                          Text(
-                            '0 / 20 доступно',
-                            style: AppTextStyle.customTextSmall,
+                          RichText(
+                            text: TextSpan(
+                                text: '${responsePayload.totalPointsCount * 5}',
+                                style: AppTextStyle.customTextMedium,
+                                children: const [
+                                  TextSpan(
+                                    text: ' / 20 доступно',
+                                    style: AppTextStyle.customTextSmall,
+                                  )
+                                ]
+                            ),
                           ),
                         ],
                       ),
