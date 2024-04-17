@@ -1,16 +1,12 @@
 # mad_soft
 
-A new Flutter project.
+Test app for Mad Soft.
 
-## Getting Started
+Screenshots:
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+<img src="https://github.com/EvgeniyaSimonova/mad_soft/blob/master/main_screen.png" width="200" />
+<img src="https://github.com/EvgeniyaSimonova/mad_soft/blob/master/plan_screen.png" width="200" />
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
