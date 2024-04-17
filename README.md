@@ -3,8 +3,8 @@
 Test app for Mad Soft.
 
 Screenshots:
-![Main Screen](https://github.com/EvgeniyaSimonova/mad_soft/blob/master/plan_screen.png)
+<img src="https://github.com/EvgeniyaSimonova/mad_soft/blob/master/main_screen.png" width="200" />
+<img src="https://github.com/EvgeniyaSimonova/mad_soft/blob/master/plan_screen.png" width="200" />
 
-![Plan Screen](https://github.com/EvgeniyaSimonova/mad_soft/blob/master/plan_screen.png)
 
 
