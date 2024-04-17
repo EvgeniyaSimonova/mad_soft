@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mad_soft/home/data/model/plan_entity.dart';
 import 'package:mad_soft/home/domain/repository/home_repo.dart';
 
@@ -9,9 +9,10 @@ part 'home_event.dart';
 
 part 'home_state.dart';
 
+part 'home_bloc.freezed.dart';
+
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc(this._homeRepo)
-      : super(const HomeState(status: HomeBlocStates.initial)) {
+  HomeBloc(this._homeRepo) : super(const HomeState.idle()) {
     on<GetPayloadListEvent>(_getResponsePayloadList);
     on<SearchEvent>(_searchEvent);
   }
@@ -23,8 +24,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     Emitter<HomeState> emit,
   ) async {
     emit(
-      HomeState(
-        status: HomeBlocStates.loading,
+      HomeState.loading(
         payloadList: state.payloadList,
         payloadSearchList: state.payloadSearchList,
       ),
@@ -35,8 +35,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     final responsePayloadList = responsePayloadModel.plans;
 
     emit(
-      HomeState(
-        status: HomeBlocStates.success,
+      HomeState.success(
         payloadList: responsePayloadList,
         payloadSearchList: responsePayloadList,
       ),
@@ -51,12 +50,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     final filteredList = responsePayloadList
         .where((element) => element.title.toLowerCase().contains(event.query))
         .toList();
+
     emit(
-      HomeState(
-        status: HomeBlocStates.success,
+      state.copyWith(
         payloadSearchList:
             event.query.isEmpty ? responsePayloadList : filteredList,
-        payloadList: state.payloadList,
       ),
     );
   }

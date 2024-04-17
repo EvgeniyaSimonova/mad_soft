@@ -31,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void dispose() {
     _bloc.close();
+
     super.dispose();
   }
 
@@ -41,13 +42,15 @@ class _HomeScreenState extends State<HomeScreen> {
       child: BlocBuilder<HomeBloc, HomeState>(
         bloc: _bloc,
         builder: (context, state) {
-          return switch (state.status) {
-            HomeBlocStates.initial =>
-              const Center(child: CircularProgressIndicator()),
-            HomeBlocStates.loading =>
-              const Center(child: CircularProgressIndicator()),
-            HomeBlocStates.error => const Center(child: Text('Error')),
-            HomeBlocStates.success => Padding(
+          return state.maybeMap(
+            loading: (loading) {
+              return const Center(child: CircularProgressIndicator());
+            },
+            error: (error) {
+              return const Center(child: Text('Error'));
+            },
+            success: (success) {
+              return Padding(
                 padding: const EdgeInsets.all(16),
                 child: CustomScrollView(
                   slivers: [
@@ -115,8 +118,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-              ),
-          };
+              );
+            },
+            orElse: () {
+              return const SizedBox.shrink();
+            },
+          );
         },
       ),
     );

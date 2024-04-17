@@ -1,16 +1,24 @@
 part of 'home_bloc.dart';
 
-enum HomeBlocStates { initial, loading, success, error }
+@freezed
+class HomeState with _$HomeState {
+  const factory HomeState.idle({
+    @Default([]) List<PlanEntity> payloadList,
+    @Default([]) List<PlanEntity> payloadSearchList,
+  }) = IdleHomeState;
 
-@immutable
-class HomeState {
-  final HomeBlocStates status;
-  final List<PlanEntity> payloadList;
-  final List<PlanEntity> payloadSearchList;
+  const factory HomeState.loading({
+    @Default([]) List<PlanEntity> payloadList,
+    @Default([]) List<PlanEntity> payloadSearchList,
+  }) = LoadingHomeState;
 
-  const HomeState({
-    this.payloadList = const [],
-    this.payloadSearchList = const [],
-    required this.status,
-  });
+  const factory HomeState.success({
+    required List<PlanEntity> payloadList,
+    required List<PlanEntity> payloadSearchList,
+  }) = SuccessHomeState;
+
+  const factory HomeState.error({
+    @Default([]) List<PlanEntity> payloadList,
+    @Default([]) List<PlanEntity> payloadSearchList,
+  }) = ErrorHomeState;
 }

@@ -11,6 +11,7 @@ class HomeRepo implements IHomeRepo {
   Future<ResponsePayload> getResponsePayload() async {
     final response = await _dioClient.getResponsePayload();
     final model = ResponsePayload.fromJson(response);
+
     return model;
   }
 }
