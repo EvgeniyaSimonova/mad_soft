@@ -4,6 +4,8 @@ import 'package:mad_soft/dio_client/dio_client.dart';
 import 'package:mad_soft/home/data/repository/home_repo_impl.dart';
 import 'package:mad_soft/home/presentation/screens/home_screen.dart';
 
+import 'home/presentation/screens/plan_screen.dart';
+
 class MyApp extends StatelessWidget {
   final DioClient _dioClient;
 
@@ -12,14 +14,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        useMaterial3: true,
-      ),
-      home: RepositoryProvider(
-        create: (context) => HomeRepo(_dioClient),
-        child: const MyHomePage(),
+    return RepositoryProvider(
+      create: (context) => HomeRepo(_dioClient),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          useMaterial3: true,
+        ),
+        routes: {
+          '/': (context) => const MyHomePage(),
+          '/plan': (context) => const PlanScreen(),
+        },
+        initialRoute: '/',
       ),
     );
   }

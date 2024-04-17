@@ -363,6 +363,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.0"
+  memory_info:
+    dependency: "direct main"
+    description:
+      name: memory_info
+      sha256: "5cbdb0acb5b0089b5776a6cadd3adaaf989d1178718af2ae07eb62f7ecff9982"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
+  memory_info_platform_interface:
+    dependency: transitive
+    description:
+      name: memory_info_platform_interface
+      sha256: "0a8c674ac7929d112987b4501ffda7cee7129c51827effa0bc24e5e460b9a201"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   meta:
     dependency: transitive
     description:
@@ -403,6 +419,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.3"
+  plugin_platform_interface:
+    dependency: transitive
+    description:
+      name: plugin_platform_interface
+      sha256: "4820fbfdb9478b1ebae27888254d445073732dae3d6ea81f0b7e06d5dedc3f02"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.8"
   pool:
     dependency: transitive
     description:
@@ -578,4 +602,4 @@ packages:
     version: "3.1.2"
 sdks:
   dart: ">=3.0.6 <4.0.0"
-  flutter: ">=1.16.0"
+  flutter: ">=1.20.0"

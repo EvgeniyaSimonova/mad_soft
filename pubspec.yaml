@@ -34,6 +34,7 @@ dependencies:
   bloc: ^8.1.4
   freezed: ^2.5.2
   dio: ^5.4.3+1
+  memory_info: ^0.0.3
   flutter:
     sdk: flutter
 

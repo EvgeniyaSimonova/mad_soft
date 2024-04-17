@@ -4,22 +4,24 @@ import 'package:mad_soft/home/presentation/bloc/home_bloc.dart';
 import 'package:mad_soft/home/presentation/widgets/card_of_object.dart';
 import 'package:mad_soft/home/presentation/widgets/search_line.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({
+class HomeFilling extends StatefulWidget {
+  const HomeFilling({
     super.key,
     required HomeBloc bloc,
     required TextEditingController textController,
+    required this.diskTotalSpace,
   })  : _bloc = bloc,
         _textController = textController;
 
+  final String diskTotalSpace;
   final HomeBloc _bloc;
   final TextEditingController _textController;
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeFilling> createState() => _HomeFillingState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeFillingState extends State<HomeFilling> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
@@ -87,6 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemBuilder: (BuildContext context, int index) =>
                           CardOfObject(
                         responsePayload: state.payloadSearchList[index],
+                        diskTotalSpace: widget.diskTotalSpace,
                       ),
                       separatorBuilder: (BuildContext context, int index) =>
                           const SizedBox(

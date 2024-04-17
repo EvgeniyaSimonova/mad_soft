@@ -4,10 +4,12 @@ import 'package:mad_soft/utils/text_style.dart';
 
 class CardOfObject extends StatelessWidget {
   final CustomObject responsePayload;
+  final String diskTotalSpace;
 
   const CardOfObject({
     super.key,
     required this.responsePayload,
+    required this.diskTotalSpace,
   });
 
   @override
@@ -21,7 +23,7 @@ class CardOfObject extends StatelessWidget {
         ),
         color: Colors.white,
         child: InkWell(
-          onTap: () {},
+          onTap: () => Navigator.of(context).pushNamed('/plan'),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -52,15 +54,15 @@ class CardOfObject extends StatelessWidget {
                           ),
                           RichText(
                             text: TextSpan(
-                              text: '${responsePayload.totalPointsCount * 5}',
-                              style: AppTextStyle.customTextMedium,
-                              children: const [
-                                TextSpan(
-                                  text: ' / 20 осталось',
-                                  style: AppTextStyle.customTextSmall,
-                                )
-                              ]
-                            ),
+                                text: '${responsePayload.remainingPoints}',
+                                style: AppTextStyle.customTextMedium,
+                                children: [
+                                  TextSpan(
+                                    text:
+                                        ' / ${responsePayload.totalPointsCount} осталось',
+                                    style: AppTextStyle.customTextSmall,
+                                  )
+                                ]),
                           ),
                         ],
                       ),
@@ -74,15 +76,15 @@ class CardOfObject extends StatelessWidget {
                           ),
                           RichText(
                             text: TextSpan(
-                                text: '${responsePayload.totalPointsCount * 5}',
+                                text:
+                                    '${(responsePayload.totalPointsCount * 5).toDouble()} ГБ',
                                 style: AppTextStyle.customTextMedium,
-                                children: const [
+                                children: [
                                   TextSpan(
-                                    text: ' / 20 доступно',
+                                    text: ' / $diskTotalSpace ГБ доступно',
                                     style: AppTextStyle.customTextSmall,
                                   )
-                                ]
-                            ),
+                                ]),
                           ),
                         ],
                       ),

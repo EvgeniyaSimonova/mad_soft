@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mad_soft/home/data/repository/home_repo_impl.dart';
 import 'package:mad_soft/home/presentation/bloc/home_bloc.dart';
-import 'package:mad_soft/home/presentation/widgets/home_screen.dart';
+import 'package:mad_soft/home/presentation/widgets/home_filling.dart';
 import 'package:mad_soft/utils/colors.dart';
+import 'package:memory_info/memory_info.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -18,6 +19,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _textController = TextEditingController();
 
   int _selectedIndex = 0;
+  String diskTotalSpace = '';
 
   void _onItemTapped(int index) {
     if (_selectedIndex == index) {
@@ -28,10 +30,16 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  Future<void> _getMemoryInfo() async {
+    final diskSpace = await MemoryInfoPlugin().diskSpace;
+    diskTotalSpace = ((diskSpace.totalSpace ?? 0) / 1024).toStringAsFixed(1);
+  }
+
   @override
   void initState() {
     super.initState();
 
+    _getMemoryInfo();
     _bloc = HomeBloc(context.read<HomeRepo>());
     _bloc.add(GetPayloadListEvent());
   }
@@ -49,9 +57,21 @@ class _MyHomePageState extends State<MyHomePage> {
       body: IndexedStack(
         index: _selectedIndex,
         children: [
-          HomeScreen(bloc: _bloc, textController: _textController),
-          HomeScreen(bloc: _bloc, textController: _textController),
-          HomeScreen(bloc: _bloc, textController: _textController),
+          HomeFilling(
+            bloc: _bloc,
+            textController: _textController,
+            diskTotalSpace: diskTotalSpace,
+          ),
+          HomeFilling(
+            bloc: _bloc,
+            textController: _textController,
+            diskTotalSpace: diskTotalSpace,
+          ),
+          HomeFilling(
+            bloc: _bloc,
+            textController: _textController,
+            diskTotalSpace: diskTotalSpace,
+          ),
         ],
       ),
       bottomNavigationBar: buildBottomNavigationBar(),
