@@ -2,44 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mad_soft/home/data/repository/home_repo_impl.dart';
 import 'package:mad_soft/home/presentation/bloc/home_bloc.dart';
-import 'package:mad_soft/home/presentation/widgets/home_filling.dart';
-import 'package:mad_soft/utils/colors.dart';
-import 'package:memory_info/memory_info.dart';
+import 'package:mad_soft/home/presentation/widgets/plan_card.dart';
+import 'package:mad_soft/home/presentation/widgets/search_line.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({
+    super.key,
+    required this.diskTotalSpace,
+  });
+
+  final String diskTotalSpace;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomeScreenState extends State<HomeScreen> {
   late final HomeBloc _bloc;
-
-  final TextEditingController _textController = TextEditingController();
-
-  int _selectedIndex = 0;
-  String diskTotalSpace = '';
-
-  void _onItemTapped(int index) {
-    if (_selectedIndex == index) {
-      return;
-    }
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  Future<void> _getMemoryInfo() async {
-    final diskSpace = await MemoryInfoPlugin().diskSpace;
-    diskTotalSpace = ((diskSpace.totalSpace ?? 0) / 1024).toStringAsFixed(1);
-  }
 
   @override
   void initState() {
     super.initState();
 
-    _getMemoryInfo();
     _bloc = HomeBloc(context.read<HomeRepo>());
     _bloc.add(GetPayloadListEvent());
   }
@@ -52,74 +36,88 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFEAEFFF),
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: [
-          HomeFilling(
-            bloc: _bloc,
-            textController: _textController,
-            diskTotalSpace: diskTotalSpace,
-          ),
-          HomeFilling(
-            bloc: _bloc,
-            textController: _textController,
-            diskTotalSpace: diskTotalSpace,
-          ),
-          HomeFilling(
-            bloc: _bloc,
-            textController: _textController,
-            diskTotalSpace: diskTotalSpace,
-          ),
-        ],
-      ),
-      bottomNavigationBar: buildBottomNavigationBar(),
-    );
-  }
-
-  Container buildBottomNavigationBar() {
-    return Container(
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(15),
-          topRight: Radius.circular(15),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black38,
-            spreadRadius: -17,
-            blurRadius: 30,
-          ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(15),
-          topRight: Radius.circular(15),
-        ),
-        child: BottomNavigationBar(
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-          type: BottomNavigationBarType.fixed,
-          iconSize: 24,
-          selectedItemColor: AppColors.menuActivate,
-          unselectedItemColor: AppColors.menuDeactivate,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_filled),
-              label: 'Объекты',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.photo_camera_back_outlined),
-              label: 'Сеты',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person_outlined),
-              label: 'Профиль',
-            ),
-          ],
-        ),
+    return BlocProvider.value(
+      value: _bloc,
+      child: BlocBuilder<HomeBloc, HomeState>(
+        bloc: _bloc,
+        builder: (context, state) {
+          return switch (state.status) {
+            HomeBlocStates.initial =>
+              const Center(child: CircularProgressIndicator()),
+            HomeBlocStates.loading =>
+              const Center(child: CircularProgressIndicator()),
+            HomeBlocStates.error => const Center(child: Text('Error')),
+            HomeBlocStates.success => Padding(
+                padding: const EdgeInsets.all(16),
+                child: CustomScrollView(
+                  slivers: [
+                    SliverAppBar(
+                      pinned: true,
+                      snap: true,
+                      floating: true,
+                      stretch: true,
+                      surfaceTintColor: const Color(0xFFEAEFFF),
+                      expandedHeight: 124,
+                      flexibleSpace: const FlexibleSpaceBar(
+                        titlePadding: EdgeInsets.zero,
+                        centerTitle: false,
+                        expandedTitleScale: 1.2,
+                        title: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 12),
+                            child: Text(
+                              'Объекты',
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                fontSize: 32,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'Roboto',
+                                color: Color(0xFF1B1B1F),
+                              ),
+                            ),
+                          ),
+                        ),
+                        background: Align(
+                          alignment: Alignment.bottomLeft,
+                          child: SizedBox(
+                            height: 55,
+                            child: SearchLine(),
+                          ),
+                        ),
+                      ),
+                      backgroundColor: const Color(0xFFEAEFFF),
+                      actions: [
+                        Center(
+                          child: IconButton(
+                            iconSize: 25,
+                            color: Colors.black,
+                            icon: const Icon(Icons.info_outline),
+                            onPressed: () {},
+                          ),
+                        ),
+                      ],
+                    ),
+                    SliverPadding(
+                      padding: const EdgeInsets.only(top: 16),
+                      sliver: SliverList.separated(
+                        itemBuilder: (BuildContext context, int index) =>
+                            PlanCard(
+                          planEntity: state.payloadSearchList[index],
+                          diskTotalSpace: widget.diskTotalSpace,
+                        ),
+                        separatorBuilder: (BuildContext context, int index) =>
+                            const SizedBox(
+                          height: 12,
+                        ),
+                        itemCount: state.payloadSearchList.length,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+          };
+        },
       ),
     );
   }

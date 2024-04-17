@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:mad_soft/home/data/model/custom_object.dart';
+import 'package:mad_soft/home/data/model/plan_entity.dart';
 import 'package:mad_soft/home/domain/repository/home_repo.dart';
 
 part 'home_event.dart';
@@ -32,7 +32,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     final responsePayloadModel = await _homeRepo.getResponsePayload();
 
-    final responsePayloadList = responsePayloadModel.payload;
+    final responsePayloadList = responsePayloadModel.plans;
 
     emit(
       HomeState(

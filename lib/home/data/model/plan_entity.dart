@@ -1,26 +1,26 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:mad_soft/home/data/model/points.dart';
+import 'package:mad_soft/home/data/model/point.dart';
 
-part 'custom_object.g.dart';
+part 'plan_entity.g.dart';
 
 @JsonSerializable()
-class CustomObject {
+class PlanEntity {
   final String title;
   @JsonKey(name: 'remaining_points')
   final int remainingPoints;
   @JsonKey(name: 'total_points_count')
   final int totalPointsCount;
-  final List<Points> points;
+  final List<Point> points;
 
-  CustomObject({
+  PlanEntity({
     required this.title,
     required this.remainingPoints,
     required this.totalPointsCount,
     required this.points,
   });
 
-  factory CustomObject.fromJson(Map<String, dynamic> json) =>
-      _$CustomObjectFromJson(json);
+  factory PlanEntity.fromJson(Map<String, dynamic> json) =>
+      _$PlanEntityFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CustomObjectToJson(this);
+  Map<String, dynamic> toJson() => _$PlanEntityToJson(this);
 }

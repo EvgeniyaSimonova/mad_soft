@@ -5,9 +5,8 @@ enum HomeBlocStates { initial, loading, success, error }
 @immutable
 class HomeState {
   final HomeBlocStates status;
-  final List<CustomObject> payloadList;
-
-  final List<CustomObject> payloadSearchList;
+  final List<PlanEntity> payloadList;
+  final List<PlanEntity> payloadSearchList;
 
   const HomeState({
     this.payloadList = const [],

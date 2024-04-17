@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:mad_soft/home/data/model/custom_object.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mad_soft/home/data/model/plan_entity.dart';
+import 'package:mad_soft/home/presentation/screens/plan_screen.dart';
 import 'package:mad_soft/utils/text_style.dart';
 
-class CardOfObject extends StatelessWidget {
-  final CustomObject responsePayload;
+class PlanCard extends StatelessWidget {
+  final PlanEntity planEntity;
   final String diskTotalSpace;
 
-  const CardOfObject({
+  const PlanCard({
     super.key,
-    required this.responsePayload,
+    required this.planEntity,
     required this.diskTotalSpace,
   });
 
@@ -23,7 +25,13 @@ class CardOfObject extends StatelessWidget {
         ),
         color: Colors.white,
         child: InkWell(
-          onTap: () => Navigator.of(context).pushNamed('/plan'),
+          onTap: () => context.push(
+            '/plan',
+            extra: PlanScreenExtra(
+              points: planEntity.points,
+              title: planEntity.title,
+            ),
+          ),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -31,7 +39,7 @@ class CardOfObject extends StatelessWidget {
               children: [
                 FittedBox(
                   child: Text(
-                    responsePayload.title,
+                    planEntity.title,
                     style: const TextStyle(
                       fontSize: 16,
                       letterSpacing: 0.15,
@@ -54,12 +62,12 @@ class CardOfObject extends StatelessWidget {
                           ),
                           RichText(
                             text: TextSpan(
-                                text: '${responsePayload.remainingPoints}',
+                                text: '${planEntity.remainingPoints}',
                                 style: AppTextStyle.customTextMedium,
                                 children: [
                                   TextSpan(
                                     text:
-                                        ' / ${responsePayload.totalPointsCount} осталось',
+                                        ' / ${planEntity.totalPointsCount} осталось',
                                     style: AppTextStyle.customTextSmall,
                                   )
                                 ]),
@@ -76,15 +84,16 @@ class CardOfObject extends StatelessWidget {
                           ),
                           RichText(
                             text: TextSpan(
-                                text:
-                                    '${(responsePayload.totalPointsCount * 5).toDouble()} ГБ',
-                                style: AppTextStyle.customTextMedium,
-                                children: [
-                                  TextSpan(
-                                    text: ' / $diskTotalSpace ГБ доступно',
-                                    style: AppTextStyle.customTextSmall,
-                                  )
-                                ]),
+                              text:
+                                  '${(planEntity.totalPointsCount * 5).toDouble()} ГБ',
+                              style: AppTextStyle.customTextMedium,
+                              children: [
+                                TextSpan(
+                                  text: ' / $diskTotalSpace ГБ доступно',
+                                  style: AppTextStyle.customTextSmall,
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
